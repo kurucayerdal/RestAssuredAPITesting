@@ -1,5 +1,7 @@
 package mersys;
 
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
 import mersys.model.Country;
@@ -42,6 +44,7 @@ public class CountryTest {
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     public void createCountry() {
 
         country.setName(randomCountryName);
@@ -63,6 +66,7 @@ public class CountryTest {
     }
 
     @Test(dependsOnMethods = {"createCountry"})
+    @Severity(SeverityLevel.NORMAL)
     public void createCountryNegative() {
 
         country.setName(randomCountryName);
@@ -82,6 +86,7 @@ public class CountryTest {
     }
 
     @Test(dependsOnMethods = {"createCountryNegative"})
+    @Severity(SeverityLevel.MINOR)
     public void updateCountry() {
 
         String countryName = randomString(9);
@@ -106,6 +111,7 @@ public class CountryTest {
     }
 
     @Test(dependsOnMethods = {"updateCountry"})
+    @Severity(SeverityLevel.TRIVIAL)
     public void deleteCountry() {
 
         given()
@@ -118,7 +124,8 @@ public class CountryTest {
         ;
     }
 
-    @Test(enabled = false, dependsOnMethods = {"deleteCountry"})
+    @Test(dependsOnMethods = {"deleteCountry"})
+    @Severity(SeverityLevel.BLOCKER)
     public void deleteCountryNegative() {
 
         given()
